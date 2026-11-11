@@ -1,0 +1,20 @@
+server:
+  port: 8080
+  # Honor X-Forwarded-* from a trusted reverse proxy so the filter keys on the client address.
+  forward-headers-strategy: framework
+
+rate-limit:
+  # Burst size. Matches the sample `limit=40` from the FastAPI middleware.
+  capacity: 40
+  # Tokens added over each refill period. A full bucket restores in one period.
+  refill-tokens: 40
+  # Refill period in seconds. Matches the sample `window=60`.
+  refill-period-seconds: 60
+  include-path-patterns:
+    - /api/**
+  exclude-path-patterns:
+    - /api/health
+
+logging:
+  level:
+    com.ratelimiter: INFO
